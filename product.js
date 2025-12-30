@@ -55,7 +55,6 @@ nextBtn.addEventListener('click', () => {
 downloadBtn.addEventListener('click', e => {
     e.preventDefault();
     const url = downloadBtn.href;
-
     showDownloadParticleEffect(url);
 });
 
@@ -64,23 +63,17 @@ function showDownloadParticleEffect(url) {
     container.className = 'download-particle-container';
     document.body.appendChild(container);
 
-    const numParticles = 150;
+    const numParticles = 200;
     const particles = [];
 
-    // создаём частицы в случайных местах
+    // создаём частицы случайно
     for (let i = 0; i < numParticles; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
         p.style.left = Math.random() * window.innerWidth + 'px';
         p.style.top = Math.random() * window.innerHeight + 'px';
         container.appendChild(p);
-        particles.push({
-            el: p,
-            x: parseFloat(p.style.left),
-            y: parseFloat(p.style.top),
-            vx: 0,
-            vy: 0
-        });
+        particles.push({ el: p, x: parseFloat(p.style.left), y: parseFloat(p.style.top), vy: 0, vx: 0 });
     }
 
     const centerX = window.innerWidth / 2;
@@ -96,16 +89,17 @@ function showDownloadParticleEffect(url) {
             const dy = centerY - p.y;
 
             if (t < 1000) {
-                // втягивание к центру (0-1 сек)
+                // втягивание к центру
                 p.x += dx * 0.05;
                 p.y += dy * 0.05;
             } else if (t < 2000) {
-                // дрожание в центре (1-2 сек)
+                // дрожание в центре
                 p.x += dx * 0.1 + (Math.random() - 0.5) * 4;
                 p.y += dy * 0.1 + (Math.random() - 0.5) * 4;
             } else {
                 // падение вниз
-                p.vy = (p.vy || 0) + 0.5;
+                p.vx = 0;
+                p.vy += 0.5;
                 p.y += p.vy;
             }
 
@@ -115,13 +109,16 @@ function showDownloadParticleEffect(url) {
         if (t < 2500) {
             requestAnimationFrame(animate);
         } else {
-            // создаем галочку в центре
+            // создаем галочку
             const check = document.createElement('div');
             check.className = 'particle-check';
+            check.innerHTML = `<div class="line1"></div><div class="line2"></div>`;
             container.appendChild(check);
 
+            // плавное появление галочки
+            requestAnimationFrame(() => check.classList.add('show'));
+
             setTimeout(() => {
-                // очищаем контейнер и запускаем скачивание
                 container.remove();
                 const a = document.createElement('a');
                 a.href = url;
