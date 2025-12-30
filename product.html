@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>FernieX - Product</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="download_complete.css">
 </head>
 <body>
 
@@ -11,6 +12,9 @@
 <button class="btn-back" onclick="window.history.back()">Назад</button>
 
 <canvas id="particle-network"></canvas>
+
+<!-- Анимация скачивания поверх всего -->
+<div id="download-effect-container"></div>
 
 <div class="product-viewer-container container" id="content">
     <!-- Слева фото -->
@@ -26,8 +30,7 @@
         <p id="product-desc"><strong>Описание:</strong> Здесь описание продукта...</p>
         <p id="product-author"><strong>Автор:</strong> Имя автора</p>
         <p id="product-size"><strong>Вес файла:</strong> 0 MB</p>
-<a id="download-btn" href="downloads/redux-pack.zip" class="btn-glass">Скачать</a>
-<div id="download-effect-container"></div>
+        <a id="download-btn" href="downloads/redux-pack.zip" class="btn-glass">Скачать</a>
     </div>
 </div>
 
