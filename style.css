@@ -1,78 +1,356 @@
+/* Глобальные стили */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
 }
 
+/* Анимированный фон с градиентами */
 body {
-    background: #0e0e0e;
+    background: linear-gradient(135deg, 
+        #0a0a0a 0%, 
+        #141522 30%, 
+        #1a0f2a 70%, 
+        #0a0a0a 100%);
     color: #fff;
-    padding: 40px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding: 40px 20px;
 }
 
+/* Динамические световые эффекты на заднем плане */
+.lights-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.glow-particle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.15;
+    animation: float 25s infinite linear;
+}
+
+/* Анимация плавающих частиц */
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(30px, 50px) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 80px) rotate(240deg);
+    }
+}
+
+/* Заголовок с неоновым эффектом */
 h1 {
     text-align: center;
-    margin-bottom: 40px;
-    font-size: 38px;
+    margin-bottom: 50px;
+    font-size: 3.5rem;
+    font-weight: 800;
+    position: relative;
+    padding-bottom: 20px;
 }
 
+/* Неоновый эффект для заголовка */
+h1::before {
+    content: 'FernieX - Files';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-shadow: 
+        0 0 5px #fff,
+        0 0 10px #fff,
+        0 0 15px #fff,
+        0 0 20px #00eaff,
+        0 0 35px #00eaff,
+        0 0 40px #00eaff,
+        0 0 50px #00eaff,
+        0 0 75px #00eaff;
+    animation: neon-pulse 2s infinite alternate;
+    z-index: -1;
+    opacity: 0.7;
+}
+
+@keyframes neon-pulse {
+    from {
+        opacity: 0.7;
+        text-shadow: 
+            0 0 5px #fff,
+            0 0 10px #fff,
+            0 0 15px #fff,
+            0 0 20px #00eaff,
+            0 0 35px #00eaff,
+            0 0 40px #00eaff,
+            0 0 50px #00eaff,
+            0 0 75px #00eaff;
+    }
+    to {
+        opacity: 0.9;
+        text-shadow: 
+            0 0 10px #fff,
+            0 0 20px #fff,
+            0 0 30px #fff,
+            0 0 40px #00eaff,
+            0 0 70px #00eaff,
+            0 0 80px #00eaff,
+            0 0 100px #00eaff,
+            0 0 150px #00eaff;
+    }
+}
+
+/* Контейнер */
 .container {
-    max-width: 1100px;
-    margin: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
+/* Сетка продуктов */
 .products {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
+    perspective: 1000px;
 }
 
+/* Карточка продукта */
 .product {
-    background: #1a1a1a;
-    border-radius: 12px;
-    padding: 15px;
+    background: rgba(25, 25, 35, 0.7);
+    border-radius: 20px;
+    padding: 25px;
     position: relative;
     text-decoration: none;
     color: white;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transform-style: preserve-3d;
 }
 
+.product::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, 
+        #ff0080, 
+        #00eaff, 
+        #9d50bb, 
+        #ff0080);
+    background-size: 400% 400%;
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s;
+    animation: gradient-border 3s ease infinite;
+}
+
+@keyframes gradient-border {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.product:hover::before {
+    opacity: 1;
+}
+
+.product:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 0 30px rgba(0, 234, 255, 0.2);
+}
+
+/* Изображение продукта */
 .product img {
     width: 100%;
-    border-radius: 10px;
-    pointer-events: none;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: all 0.5s ease;
+    filter: brightness(0.9);
 }
 
+.product:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1) saturate(1.2);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Заголовок продукта */
 .product h3 {
-    margin-top: 12px;
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    background: linear-gradient(45deg, #fff, #00eaff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: all 0.3s ease;
 }
 
+.product:hover h3 {
+    background: linear-gradient(45deg, #fff, #ff0080);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* Бейдж */
 .badge {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(0,0,0,0.7);
-    padding: 5px 10px;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(45deg, #ff0080, #ff8c00);
+    padding: 8px 16px;
     border-radius: 20px;
-    font-size: 13px;
-    color: #ccc;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+    z-index: 2;
+    animation: badge-pulse 2s infinite;
+    box-shadow: 0 5px 15px rgba(255, 0, 128, 0.3);
 }
 
-/* product page */
+@keyframes badge-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
 
+/* Страница продукта */
 .product-title {
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    font-weight: 700;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
 }
 
+.product-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00eaff, transparent);
+    border-radius: 2px;
+}
+
+/* Галерея */
 .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    background: rgba(25, 25, 35, 0.5);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .gallery img {
     width: 100%;
-    border-radius: 10px;
-    pointer-events: none;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery img::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(0, 234, 255, 0.2), 
+        rgba(255, 0, 128, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.03);
+    box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.4),
+        0 0 0 2px rgba(0, 234, 255, 0.3),
+        0 0 40px rgba(0, 234, 255, 0.2);
+}
+
+.gallery img:hover::after {
+    opacity: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+    
+    .products {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .product-title {
+        font-size: 2rem;
+    }
+    
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Прокрутка */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff0080, #00eaff);
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ff0080, #ff8c00);
+}
+
+/* Эффект параллакса при прокрутке */
+.product, .gallery img {
+    will-change: transform;
 }
