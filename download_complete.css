@@ -1,33 +1,6 @@
-/* Контейнер для частиц */
-.download-particle-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 10000;
-}
-
-/* Частицы */
-.download-particle-container .particle {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #0f0; /* зеленые частицы */
-    will-change: transform;
-}
-
-/* Кнопка */
 #download-btn {
-    background: #00eaff; /* изначальный голубоватый */
+    background: #00eaff; /* исходный голубоватый цвет */
     color: white;
-    transition: background 0.5s ease; /* плавное перекрашивание в зелёный */
-}
-
-/* Зеленый цвет при завершении полёта частиц */
-#download-btn.active {
-    background: #0f0;
+    transition: background 0.5s ease;
+    cursor: pointer;
 }
