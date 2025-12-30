@@ -11,17 +11,6 @@
         "images/redux1.png",
         "images/redux2.png"
       ]
-    },
-    {
-      "id": "config",
-      "name": "Config Files",
-      "description": "No description",
-      "author": "FernieX",
-      "size": "0 KB",
-      "download": "downloads/config-files.zip",
-      "images": [
-        "images/config1.png"
-      ]
     }
   ]
 }
