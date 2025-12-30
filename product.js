@@ -53,37 +53,85 @@ nextBtn.addEventListener('click', () => {
 
 // ===== DOWNLOAD EFFECT =====
 downloadBtn.addEventListener('click', e => {
-  e.preventDefault(); 
-  const url = downloadBtn.href;
+    e.preventDefault();
+    const url = downloadBtn.href;
 
-  showDownloadCompleteEffect(() => {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = '';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-  });
+    showDownloadParticleEffect(url);
 });
 
-function showDownloadCompleteEffect(callback) {
-  const overlay = document.createElement('div');
-  overlay.className = 'download-overlay';
-  overlay.innerHTML = `
-      <div class="drop"></div>
-      <div class="circle">
-          <svg viewBox="0 0 52 52" class="checkmark">
-              <circle cx="26" cy="26" r="25" fill="none"/>
-              <path d="M14 27l7 7 16-16" fill="none"/>
-          </svg>
-      </div>
-  `;
-  document.body.appendChild(overlay);
-  setTimeout(() => overlay.classList.add('animate'), 50);
+function showDownloadParticleEffect(url) {
+    const container = document.createElement('div');
+    container.className = 'download-particle-container';
+    document.body.appendChild(container);
 
-  setTimeout(() => {
-      callback();
-  }, 2500);
+    const numParticles = 150;
+    const particles = [];
 
-  setTimeout(() => overlay.remove(), 4000);
+    // создаём частицы в случайных местах
+    for (let i = 0; i < numParticles; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * window.innerWidth + 'px';
+        p.style.top = Math.random() * window.innerHeight + 'px';
+        container.appendChild(p);
+        particles.push({
+            el: p,
+            x: parseFloat(p.style.left),
+            y: parseFloat(p.style.top),
+            vx: 0,
+            vy: 0
+        });
+    }
+
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    let start = null;
+
+    function animate(time) {
+        if (!start) start = time;
+        const t = time - start;
+
+        particles.forEach(p => {
+            const dx = centerX - p.x;
+            const dy = centerY - p.y;
+
+            if (t < 1000) {
+                // втягивание к центру (0-1 сек)
+                p.x += dx * 0.05;
+                p.y += dy * 0.05;
+            } else if (t < 2000) {
+                // дрожание в центре (1-2 сек)
+                p.x += dx * 0.1 + (Math.random() - 0.5) * 4;
+                p.y += dy * 0.1 + (Math.random() - 0.5) * 4;
+            } else {
+                // падение вниз
+                p.vy = (p.vy || 0) + 0.5;
+                p.y += p.vy;
+            }
+
+            p.el.style.transform = `translate(${p.x}px, ${p.y}px)`;
+        });
+
+        if (t < 2500) {
+            requestAnimationFrame(animate);
+        } else {
+            // создаем галочку в центре
+            const check = document.createElement('div');
+            check.className = 'particle-check';
+            container.appendChild(check);
+
+            setTimeout(() => {
+                // очищаем контейнер и запускаем скачивание
+                container.remove();
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }, 1000);
+        }
+    }
+
+    requestAnimationFrame(animate);
 }
