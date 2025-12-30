@@ -1,70 +1,40 @@
-.download-overlay {
+.download-particle-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+    overflow: hidden;
+    z-index: 10000;
 }
 
-.download-overlay .drop {
-    width: 40px;
-    height: 40px;
-    background: #0f0;
+.download-particle-container .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    transform: translateY(-200px) scale(0.2);
-    opacity: 0;
+    background: #00eaff;
+    will-change: transform;
 }
 
-.download-overlay.animate .drop {
-    animation: drop-fall 0.6s forwards ease-out;
+.download-particle-container .particle-check {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
 }
 
-@keyframes drop-fall {
-    to { transform: translateY(0) scale(1); opacity: 1; }
-}
-
-.download-overlay .circle {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #0f0;
-    box-shadow: 0 0 20px rgba(0,255,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: scale(0.5);
-}
-
-.download-overlay.animate .circle {
-    animation: circle-appear 0.8s forwards ease-in-out 0.6s;
-}
-
-@keyframes circle-appear {
-    0% { opacity: 0; transform: scale(0.5);}
-    50% { opacity: 1; transform: scale(1.2);}
-    100% { opacity: 1; transform: scale(1);}
-}
-
-.download-overlay .checkmark {
-    width: 40px;
-    height: 40px;
-    stroke: white;
-    stroke-width: 4;
-    stroke-dasharray: 48;
-    stroke-dashoffset: 48;
-    fill: none;
-}
-
-.download-overlay.animate .checkmark path {
-    animation: draw-check 0.5s forwards ease-in-out 1.4s;
-}
-
-@keyframes draw-check {
-    to { stroke-dashoffset: 0; }
+.download-particle-container .particle-check::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 30px;
+    border-left: 5px solid #00eaff;
+    border-bottom: 5px solid #00eaff;
+    transform: rotate(-45deg);
+    top: 10px;
+    left: 25px;
 }
