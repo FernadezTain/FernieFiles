@@ -1,41 +1,4 @@
-// Функция для создания динамических световых частиц
-function createLightParticles() {
-    const container = document.createElement('div');
-    container.className = 'lights-container';
-    document.body.appendChild(container);
-    
-    const colors = [
-        'linear-gradient(45deg, #ff0080, #ff8c00)',
-        'linear-gradient(45deg, #00d2ff, #3a7bd5)',
-        'linear-gradient(45deg, #9d50bb, #6e48aa)',
-        'linear-gradient(45deg, #00ff88, #00ccff)',
-        'linear-gradient(45deg, #ff9900, #ff3300)'
-    ];
-    
-    // Создаем 10 световых частиц
-    for (let i = 0; i < 10; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'glow-particle';
-        
-        // Случайные параметры для каждой частицы
-        const size = Math.random() * 300 + 100;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const x = Math.random() * 100;
-        const y = Math.random() * 100;
-        const duration = Math.random() * 30 + 20;
-        const delay = Math.random() * 20;
-        
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        particle.style.background = color;
-        particle.style.left = `${x}%`;
-        particle.style.top = `${y}%`;
-        particle.style.animationDuration = `${duration}s`;
-        particle.style.animationDelay = `-${delay}s`;
-        
-        container.appendChild(particle);
-    }
-}
+
 
 // Функция для добавления эффекта свечения к карточкам при наведении
 function initCardGlowEffects() {
