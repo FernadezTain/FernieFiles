@@ -1,3 +1,20 @@
+/* Плавное появление страницы */
+body {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+body.loaded {
+    opacity: 1;
+}
+
+/* Анимация "выхода" при переходе */
+body.exit {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+
 /* ===== RESET ===== */
 * {
     margin: 0;
