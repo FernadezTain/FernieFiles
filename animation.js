@@ -330,3 +330,29 @@ document.querySelectorAll('.product img, .gallery img').forEach(img => {
 });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Анимация входа
+    requestAnimationFrame(() => {
+        document.body.classList.add('loaded');
+    });
+
+    // Перехват кликов по ссылкам
+    document.querySelectorAll('a').forEach(link => {
+        // Игнорируем ссылки на якоря и внешние
+        if (link.href.startsWith(window.location.origin)) {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                const href = link.href;
+
+                // Анимация выхода
+                document.body.classList.remove('loaded');
+                document.body.classList.add('exit');
+
+                // Ждём окончания анимации
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 600); // совпадает с transition в CSS
+            });
+        }
+    });
+});
