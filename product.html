@@ -4,18 +4,6 @@
     <meta charset="UTF-8">
     <title>FernieX - Product</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Canvas для Particle Network */
-        #particle-network {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-    </style>
 </head>
 <body>
 
@@ -24,34 +12,26 @@
 
 <canvas id="particle-network"></canvas>
 
-<div class="container" id="content"></div>
+<div class="product-viewer-container container" id="content">
+    <!-- Слева фото -->
+    <div class="photo-container">
+        <button class="prev-photo">&larr;</button>
+        <img id="main-photo" src="placeholder.jpg" alt="Фото продукта">
+        <button class="next-photo">&rarr;</button>
+    </div>
+
+    <!-- Справа информация -->
+    <div class="info-container glass">
+        <h2 id="product-name">Название продукта</h2>
+        <p id="product-desc"><strong>Описание:</strong> Здесь описание продукта...</p>
+        <p id="product-author"><strong>Автор:</strong> Имя автора</p>
+        <p id="product-size"><strong>Вес файла:</strong> 0 MB</p>
+        <a id="download-btn" href="#" download class="btn-glass">Скачать</a>
+    </div>
+</div>
 
 <script src="animation.js"></script>
 <script src="particles.js"></script>
-<script>
-const id = new URLSearchParams(window.location.search).get('id');
-
-fetch('data.json')
-.then(r => r.json())
-.then(data => {
-    const product = data.products.find(p => p.id === id);
-    if (!product) return;
-
-    localStorage.setItem('viewed_' + id, 'true');
-
-    let imagesHTML = '';
-    product.images.forEach(src => {
-        imagesHTML += `<img src="${src}">`;
-    });
-
-    document.getElementById('content').innerHTML = `
-        <div class="product-title">${product.name}</div>
-        <div class="gallery">
-            ${imagesHTML}
-        </div>
-    `;
-});
-</script>
-
+<script src="product.js"></script>
 </body>
 </html>
