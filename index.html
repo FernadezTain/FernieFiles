@@ -24,12 +24,31 @@ fetch('data.json')
         const label = viewed ? '👁 viewed' : 'new';
 
         list.innerHTML += `
-            <a href="product.html?id=${p.id}" class="product">
+            <a href="#" class="product">
                 <div class="badge">${label}</div>
                 <img src="${p.images[0]}">
                 <h3>${p.name}</h3>
+
+                <!-- Раскрывающийся блок -->
+                <div class="product-expand">
+                    <button class="btn-more" onclick="window.location.href='product.html?id=${p.id}'">Подробнее</button>
+                </div>
             </a>
         `;
+    });
+
+    // Инициализация раскрытия карточек
+    document.querySelectorAll('.product').forEach(card => {
+        card.addEventListener('click', e => {
+            e.preventDefault();
+
+            // Закрываем другие карточки
+            document.querySelectorAll('.product.active').forEach(activeCard => {
+                if (activeCard !== card) activeCard.classList.remove('active');
+            });
+
+            card.classList.toggle('active');
+        });
     });
 });
 </script>
