@@ -183,3 +183,14 @@ h1 {
     background: #00eaff;
     border-radius: 4px;
 }
+
+.product img,
+.gallery img {
+    user-select: none;      /* нельзя выделять */
+    -webkit-user-drag: none; /* нельзя перетаскивать в Chrome/Safari */
+    -moz-user-drag: none;    /* Firefox */
+    -ms-user-drag: none;     /* IE/Edge */
+    user-drag: none;         /* стандарт */
+    pointer-events: auto;    /* оставляем события hover */
+}
+
