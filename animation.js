@@ -255,6 +255,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ======== Новый блок: раскрытие карточки ========
+function initProductExpand() {
+    document.querySelectorAll('.product').forEach(card => {
+        card.addEventListener('click', e => {
+            e.preventDefault(); // предотвращаем переход по ссылке
+
+            // Закрываем все остальные карточки
+            document.querySelectorAll('.product.active').forEach(activeCard => {
+                if (activeCard !== card) activeCard.classList.remove('active');
+            });
+
+            // Переключаем активный класс только для этой карточки
+            card.classList.toggle('active');
+        });
+    });
+}
+
+// ======== Инициализация всех анимаций при загрузке страницы ========
+document.addEventListener('DOMContentLoaded', () => {
+    createLightParticles();
+    animateTitle();
+    createLoadingWave();
+    initCardGlowEffects();
+    animateOnScroll();
+    initParallaxEffect();
+
+    setTimeout(() => {
+        initGalleryInteractions();
+    }, 1000);
+
+    // Инициализация раскрытия карточек
+    initProductExpand();
+
+    // Эффект свечения бейджей
+    const badges = document.querySelectorAll('.badge');
+    badges.forEach(badge => {
+        setInterval(() => {
+            badge.style.background = `linear-gradient(45deg, 
+                hsl(${Math.random() * 360}, 100%, 50%),
+                hsl(${Math.random() * 360}, 100%, 50%)
+            )`;
+        }, 2000);
+    });
+});
+
+
 // Дополнительные стили для модального окна
 const modalStyles = document.createElement('style');
 modalStyles.textContent = `
