@@ -67,39 +67,33 @@ downloadBtn.addEventListener('click', e => {
 });
 
 function showDownloadCompleteEffect(callback) {
-    const container = document.getElementById('download-effect-container');
+    // Создаем overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'download-overlay';
+    overlay.innerHTML = `
+        <div class="drop"></div>
+        <div class="circle">
+            <svg viewBox="0 0 52 52" class="checkmark">
+                <circle cx="26" cy="26" r="25" fill="none"/>
+                <path fill="none" d="M14 27l7 7 16-16"/>
+            </svg>
+        </div>
+    `;
+    document.body.appendChild(overlay);
 
-    // Создаем каплю
-    const drop = document.createElement('div');
-    drop.className = 'drop';
-    container.appendChild(drop);
+    // Запускаем анимацию
+    setTimeout(() => overlay.classList.add('animate'), 50);
 
-    // Анимация капли
-    drop.animate([
-        { transform: 'translateY(-200px) scale(0.2)', opacity: 0 },
-        { transform: 'translateY(0) scale(1)', opacity: 1 }
-    ], {
-        duration: 600,
-        easing: 'ease-out'
-    });
-
-    // Через 600ms превращаем каплю в круг с галочкой
+    // Через 2.5 секунды старт скачивания
     setTimeout(() => {
-        drop.className = 'circle';
-        drop.innerHTML = '&#10003;'; // галочка
-        drop.style.opacity = 0;
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }, 2500);
 
-        drop.animate([
-            { opacity: 0, transform: 'scale(0.8)' },
-            { opacity: 1, transform: 'scale(1.2)' },
-            { opacity: 1, transform: 'scale(1)' },
-            { opacity: 0 }
-        ], {
-            duration: 800,
-            easing: 'ease-in-out'
-        }).onfinish = () => {
-            container.removeChild(drop);
-            callback(); // запускаем скачивание после анимации
-        };
-    }, 600);
+    // Через 4 секунды удаляем overlay
+    setTimeout(() => overlay.remove(), 4000);
 }
