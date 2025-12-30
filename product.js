@@ -68,6 +68,11 @@ downloadBtn.addEventListener('click', e => {
 
 function showDownloadCompleteEffect(callback) {
     // Создаем overlay
+downloadBtn.addEventListener('click', e => {
+    e.preventDefault(); 
+    const url = downloadBtn.href;
+
+    // создаем overlay
     const overlay = document.createElement('div');
     overlay.className = 'download-overlay';
     overlay.innerHTML = `
@@ -75,16 +80,16 @@ function showDownloadCompleteEffect(callback) {
         <div class="circle">
             <svg viewBox="0 0 52 52" class="checkmark">
                 <circle cx="26" cy="26" r="25" fill="none"/>
-                <path fill="none" d="M14 27l7 7 16-16"/>
+                <path d="M14 27l7 7 16-16" fill="none"/>
             </svg>
         </div>
     `;
     document.body.appendChild(overlay);
 
-    // Запускаем анимацию
+    // небольшая задержка для запуска анимации
     setTimeout(() => overlay.classList.add('animate'), 50);
 
-    // Через 2.5 секунды старт скачивания
+    // скачивание после завершения анимации капли + круга
     setTimeout(() => {
         const a = document.createElement('a');
         a.href = url;
@@ -94,6 +99,7 @@ function showDownloadCompleteEffect(callback) {
         document.body.removeChild(a);
     }, 2500);
 
-    // Через 4 секунды удаляем overlay
+    // убираем overlay после анимации
     setTimeout(() => overlay.remove(), 4000);
-}
+});
+
