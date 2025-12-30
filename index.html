@@ -23,16 +23,6 @@ fetch('data.json')
     data.products.forEach(p => {
         const viewed = localStorage.getItem('viewed_' + p.id);
         const label = viewed ? '👁 viewed' : 'new';
-
-        list.innerHTML += `
-            <a href="#" class="product">
-                <div class="badge">${label}</div>
-                <img src="${p.images[0]}">
-                <h3>${p.name}</h3>
-                <div class="product-expand">
-                    <button class="btn-more">Подробнее</button>
-                </div>
-            </a>
         `;
     });
 
