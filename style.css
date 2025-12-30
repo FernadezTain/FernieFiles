@@ -238,3 +238,119 @@ h1 {
 .btn-back:active {
     transform: scale(0.95);
 }
+
+/* ===== PRODUCT VIEWER ===== */
+.product-viewer-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+/* ===== PHOTO CONTAINER ===== */
+.photo-container {
+    position: relative;
+    flex: 1;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-container img {
+    width: 100%;
+    border-radius: 18px;
+    object-fit: cover;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+/* Стрелки перелистывания */
+.photo-container button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.photo-container button:hover {
+    background: rgba(128,0,255,0.2);
+    border-color: rgba(128,0,255,0.5);
+    box-shadow: 0 6px 15px rgba(128,0,255,0.4);
+}
+
+.prev-photo { left: -20px; }
+.next-photo { right: -20px; }
+
+/* ===== INFO CONTAINER (Glass Morphism) ===== */
+.info-container.glass {
+    flex: 1;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 300px;
+}
+
+.info-container h2, .info-container p {
+    margin: 0;
+    font-weight: 500;
+    color: #e6faff;
+}
+
+.info-container .btn-glass {
+    display: inline-block;
+    padding: 12px 20px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 234, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 234, 255, 0.3);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.info-container .btn-glass:hover {
+    background: rgba(128,0,255,0.2);
+    border-color: rgba(128,0,255,0.5);
+    box-shadow: 0 6px 20px rgba(128,0,255,0.4);
+}
+
+.info-container .btn-glass:active {
+    transform: scale(0.95);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .product-viewer-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .photo-container {
+        max-width: 100%;
+    }
+
+    .info-container.glass {
+        min-width: 100%;
+    }
+
+    .photo-container button.prev-photo { left: 10px; }
+    .photo-container button.next-photo { right: 10px; }
+}
+
