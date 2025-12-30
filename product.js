@@ -66,16 +66,18 @@ function startDownloadButtonEffect(url) {
 
     const numParticles = 200;
     const particles = [];
-    const rect = downloadBtn.getBoundingClientRect();
-    const targetX = rect.left + rect.width / 2;
-    const targetY = rect.top + rect.height / 2;
+const rect = downloadBtn.getBoundingClientRect();
+const targetX = rect.left + rect.width / 2 + window.scrollX;
+const targetY = rect.top + rect.height / 2 + window.scrollY;
+
 
     // создаём частицы случайно по экрану
     for (let i = 0; i < numParticles; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
-        p.style.left = Math.random() * window.innerWidth + 'px';
-        p.style.top = Math.random() * window.innerHeight + 'px';
+p.style.left = Math.random() * document.documentElement.scrollWidth + 'px';
+p.style.top  = Math.random() * document.documentElement.scrollHeight + 'px';
+
         container.appendChild(p);
         particles.push({ el: p, x: parseFloat(p.style.left), y: parseFloat(p.style.top), vy: 0, vx: 0 });
     }
