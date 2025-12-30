@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "id": "redux",
+      "name": "Redux Pack",
+      "images": [
+        "images/redux1.png",
+        "images/redux2.png",
+        "images/redux3.png"
+      ],
+      "views": 0
+    },
+    {
+      "id": "config",
+      "name": "Config Files",
+      "images": [
+        "images/config1.png"
+      ],
+      "views": 0
+    }
+  ]
+}
