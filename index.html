@@ -21,7 +21,7 @@ fetch('data.json')
 
     data.products.forEach(p => {
         const viewed = localStorage.getItem('viewed_' + p.id);
-        const label = viewed ? '👁 viewed' : '🆕 new';
+        const label = viewed ? '👁 viewed' : 'new';
 
         list.innerHTML += `
             <a href="product.html?id=${p.id}" class="product">
