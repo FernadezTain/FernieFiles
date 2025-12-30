@@ -5,7 +5,7 @@
       "name": "Redux Pack",
       "description": "Набор Redux компонентов и конфигураций.",
       "author": "FernieX",
-      "size": "1.2 GB",
+      "size": "2.6 GB",
       "download": "downloads/redux-pack.zip",
       "images": [
         "images/redux1.png",
@@ -16,9 +16,9 @@
     {
       "id": "config",
       "name": "Config Files",
-      "description": "Конфигурационные файлы для проектов.",
+      "description": "No description",
       "author": "FernieX",
-      "size": "0.8 GB",
+      "size": "0 KB",
       "download": "downloads/config-files.zip",
       "images": [
         "images/config1.png"
