@@ -12,36 +12,40 @@ let currentIndex = 0;
 let images = [];
 
 fetch('data.json')
-.then(r => r.json())
-.then(data => {
-    const product = data.products.find(p => p.id === id);
-    if (!product) return;
+    .then(r => r.json())
+    .then(data => {
+        const product = data.products.find(p => p.id === id);
+        if (!product) return;
 
-    localStorage.setItem('viewed_' + id, 'true');
+        localStorage.setItem('viewed_' + id, 'true');
 
-    images = product.images;
-    updatePhoto();
+        images = product.images;
+        productName.textContent = product.name;
+        productDesc.innerHTML = `<strong>Описание:</strong> ${product.description}`;
+        productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author}`;
+        productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
+        downloadBtn.href = product.download;
 
-    // Заполняем информацию справа
-    productName.textContent = product.name;
-    productDesc.innerHTML = `<strong>Описание:</strong> ${product.description || 'Нет описания'}`;
-    productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author || 'Неизвестно'}`;
-    productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size || '0 MB'}`;
-    downloadBtn.href = product.download || '#';
-});
+        updatePhoto();
+    });
 
 function updatePhoto() {
-    mainPhoto.src = images[currentIndex];
+    if (!images.length) return;
     mainPhoto.style.opacity = 0;
-    setTimeout(() => mainPhoto.style.opacity = 1, 50);
+    setTimeout(() => {
+        mainPhoto.src = images[currentIndex];
+        mainPhoto.style.opacity = 1;
+    }, 150);
 }
 
 prevBtn.addEventListener('click', () => {
+    if (!images.length) return;
     currentIndex = (currentIndex - 1 + images.length) % images.length;
     updatePhoto();
 });
 
 nextBtn.addEventListener('click', () => {
+    if (!images.length) return;
     currentIndex = (currentIndex + 1) % images.length;
     updatePhoto();
 });
