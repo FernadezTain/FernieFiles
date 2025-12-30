@@ -20,19 +20,27 @@ const list = document.getElementById('products');
 fetch('data.json')
 .then(r => r.json())
 .then(data => {
+    // Генерация карточек
     data.products.forEach(p => {
         const viewed = localStorage.getItem('viewed_' + p.id);
         const label = viewed ? '👁 viewed' : 'new';
+
+        list.innerHTML += `
+            <a href="product.html?id=${p.id}" class="product">
+                <div class="badge">${label}</div>
+                <img src="${p.images[0]}">
+                <h3>${p.name}</h3>
+            </a>
         `;
     });
 
-    // Делегирование клика на контейнер
+    // Делегирование клика на карточки (если нужно раскрытие)
     list.addEventListener('click', e => {
         const card = e.target.closest('.product');
         if (!card) return;
 
-        // Игнорируем клик по кнопке
-        if (e.target.classList.contains('btn-more')) return;
+        // Для ссылок сразу переходим на страницу товара
+        if (card.tagName.toLowerCase() === 'a') return;
 
         e.preventDefault();
 
@@ -43,15 +51,6 @@ fetch('data.json')
 
         // Переключаем активность только текущей
         card.classList.toggle('active');
-    });
-
-    // Обработка кнопок подробнее
-    document.querySelectorAll('.btn-more').forEach(btn => {
-        btn.addEventListener('click', e => {
-            const card = e.target.closest('.product');
-            const id = data.products.find(p => p.name === card.querySelector('h3').textContent).id;
-            window.location.href = `product.html?id=${id}`;
-        });
     });
 });
 </script>
