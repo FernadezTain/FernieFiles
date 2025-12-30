@@ -52,18 +52,20 @@ nextBtn.addEventListener('click', () => {
 
 // ===== DOWNLOAD EFFECT =====
 downloadBtn.addEventListener('click', e => {
-    e.preventDefault();
+    e.preventDefault(); // отменяем стандартное поведение ссылки
     const url = downloadBtn.href;
 
     showDownloadCompleteEffect(() => {
+        // Создаем динамический элемент <a> для скачивания
         const a = document.createElement('a');
         a.href = url;
-        a.download = '';
+        a.download = ''; // указываем что это скачивание
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
     });
 });
+
 
 function showDownloadCompleteEffect(callback) {
     const container = document.createElement('div');
