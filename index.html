@@ -13,12 +13,13 @@
     <div class="products" id="products"></div>
 </div>
 
+<script src="animation.js"></script>
 <script>
+const list = document.getElementById('products');
+
 fetch('data.json')
 .then(r => r.json())
 .then(data => {
-    const list = document.getElementById('products');
-
     data.products.forEach(p => {
         const viewed = localStorage.getItem('viewed_' + p.id);
         const label = viewed ? '👁 viewed' : 'new';
@@ -28,30 +29,41 @@ fetch('data.json')
                 <div class="badge">${label}</div>
                 <img src="${p.images[0]}">
                 <h3>${p.name}</h3>
-
                 <div class="product-expand">
-    <button class="btn-more" onclick="window.location.href='product.html?id=${p.id}'">Подробнее</button>
-    </div>
+                    <button class="btn-more">Подробнее</button>
+                </div>
             </a>
         `;
     });
 
-    // Инициализация раскрытия карточек
-    document.querySelectorAll('.product').forEach(card => {
-        card.addEventListener('click', e => {
-            e.preventDefault();
+    // Делегирование клика на контейнер
+    list.addEventListener('click', e => {
+        const card = e.target.closest('.product');
+        if (!card) return;
 
-            // Закрываем другие карточки
-            document.querySelectorAll('.product.active').forEach(activeCard => {
-                if (activeCard !== card) activeCard.classList.remove('active');
-            });
+        // Игнорируем клик по кнопке
+        if (e.target.classList.contains('btn-more')) return;
 
-            card.classList.toggle('active');
+        e.preventDefault();
+
+        // Закрываем другие карточки
+        document.querySelectorAll('.product.active').forEach(activeCard => {
+            if (activeCard !== card) activeCard.classList.remove('active');
+        });
+
+        // Переключаем активность только текущей
+        card.classList.toggle('active');
+    });
+
+    // Обработка кнопок подробнее
+    document.querySelectorAll('.btn-more').forEach(btn => {
+        btn.addEventListener('click', e => {
+            const card = e.target.closest('.product');
+            const id = data.products.find(p => p.name === card.querySelector('h3').textContent).id;
+            window.location.href = `product.html?id=${id}`;
         });
     });
 });
 </script>
-<script src="animation.js"></script>
-
 </body>
 </html>
