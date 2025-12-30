@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FernieX - Product</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container" id="content"></div>
+
+<script>
+const id = new URLSearchParams(window.location.search).get('id');
+
+fetch('data.json')
+.then(r => r.json())
+.then(data => {
+    const product = data.products.find(p => p.id === id);
+    if (!product) return;
+
+    localStorage.setItem('viewed_' + id, 'true');
+
+    let images = '';
+    product.images.forEach(src => {
+        images += `<img src="${src}">`;
+    });
+
+    document.getElementById('content').innerHTML = `
+        <div class="product-title">${product.name}</div>
+        <div class="gallery">
+            ${images}
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
