@@ -53,37 +53,40 @@ nextBtn.addEventListener('click', () => {
 
 // ===== DOWNLOAD EFFECT =====
 downloadBtn.addEventListener('click', e => {
-  e.preventDefault(); 
-  const url = downloadBtn.href;
+    e.preventDefault();
+    const url = downloadBtn.href;
 
-  showDownloadCompleteEffect(() => {
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = '';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-  });
+    showDownloadCompleteEffect(() => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
 });
 
 function showDownloadCompleteEffect(callback) {
-  const overlay = document.createElement('div');
-  overlay.className = 'download-overlay';
-  overlay.innerHTML = `
-      <div class="drop"></div>
-      <div class="circle">
-          <svg viewBox="0 0 52 52" class="checkmark">
-              <circle cx="26" cy="26" r="25" fill="none"/>
-              <path d="M14 27l7 7 16-16" fill="none"/>
-          </svg>
-      </div>
-  `;
-  document.body.appendChild(overlay);
-  setTimeout(() => overlay.classList.add('animate'), 50);
+    // создаем overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'download-overlay';
+    overlay.innerHTML = `
+        <div class="drop"></div>
+        <div class="circle">
+            <svg viewBox="0 0 52 52" class="checkmark">
+                <circle cx="26" cy="26" r="25" fill="none"/>
+                <path d="M14 27l7 7 16-16"/>
+            </svg>
+        </div>
+    `;
+    document.body.appendChild(overlay);
 
-  setTimeout(() => {
-      callback();
-  }, 2500);
+    // запускаем анимацию
+    setTimeout(() => overlay.classList.add('animate'), 50);
 
-  setTimeout(() => overlay.remove(), 4000);
+    // скачивание через 2 секунды
+    setTimeout(() => callback(), 2000);
+
+    // удаление overlay через 3 секунды
+    setTimeout(() => overlay.remove(), 3000);
 }
