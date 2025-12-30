@@ -49,3 +49,46 @@ nextBtn.addEventListener('click', () => {
     currentIndex = (currentIndex + 1) % images.length;
     updatePhoto();
 });
+
+// ===== DOWNLOAD EFFECT =====
+downloadBtn.addEventListener('click', e => {
+    e.preventDefault();
+    const url = downloadBtn.href;
+
+    showDownloadCompleteEffect(() => {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    });
+});
+
+function showDownloadCompleteEffect(callback) {
+    const container = document.createElement('div');
+    container.className = 'download-complete';
+
+    const drop = document.createElement('div');
+    drop.className = 'drop';
+
+    const circle = document.createElement('div');
+    circle.className = 'circle';
+
+    const check = document.createElement('div');
+    check.className = 'checkmark';
+
+    container.appendChild(drop);
+    container.appendChild(circle);
+    container.appendChild(check);
+    document.body.appendChild(container);
+
+    setTimeout(() => {
+        container.classList.add('fade-out');
+    }, 2600);
+
+    setTimeout(() => {
+        document.body.removeChild(container);
+        if (callback) callback();
+    }, 3200);
+}
