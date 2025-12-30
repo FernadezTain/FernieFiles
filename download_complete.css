@@ -1,109 +1,59 @@
-/* ===== Download Complete Animation ===== */
-.download-complete {
+.download-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex; justify-content: center; align-items: center;
     z-index: 9999;
+    pointer-events: none;
 }
 
-.drop {
-    width: 30px;
-    height: 30px;
-    background: #4CAF50;
-    border-radius: 50% 50% 50% 50%;
-    transform: translateY(-200px) scaleY(1.5);
-    opacity: 0;
-    animation: dropFall 0.6s forwards;
-}
-
-@keyframes dropFall {
-    0% { transform: translateY(-200px) scaleY(1.5); opacity: 0; }
-    50% { transform: translateY(0) scaleY(0.7); opacity: 1; }
-    100% { transform: translateY(0) scaleY(1); opacity: 1; }
-}
-
-.circle {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: rgba(76, 175, 80, 0.3);
+.download-overlay .drop {
+    width: 20px;
+    height: 20px;
+    background: #00ff00;
     border-radius: 50%;
-    box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
+    position: absolute;
+    top: -50px;
     opacity: 0;
     transform: scale(0);
-    animation: circleAppear 0.6s 0.6s forwards;
+    transition: all 0.6s ease;
 }
 
-@keyframes circleAppear {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+.download-overlay.animate .drop {
+    top: 50%;
+    transform: scale(1);
+    opacity: 1;
 }
 
-.checkmark {
-    position: absolute;
+.download-overlay .circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(0,255,0,0.2);
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.5s ease 0.7s;
+}
+
+.download-overlay.animate .circle {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.download-overlay .checkmark {
     width: 50px;
     height: 50px;
-    border-left: 5px solid #fff;
-    border-bottom: 5px solid #fff;
-    transform: rotate(-45deg) scale(0);
-    opacity: 0;
-    animation: checkAppear 0.6s 1.2s forwards;
+    stroke: #00ff00;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    transition: stroke-dashoffset 0.5s ease 1s;
 }
 
-@keyframes checkAppear {
-    0% { transform: rotate(-45deg) scale(0); opacity: 0; }
-    100% { transform: rotate(-45deg) scale(1); opacity: 1; }
+.download-overlay.animate .checkmark path {
+    stroke-dashoffset: 0;
 }
-
-.download-complete.fade-out {
-    animation: fadeOut 0.6s 2s forwards;
-}
-
-@keyframes fadeOut {
-    0% { opacity: 1; }
-    100% { opacity: 0; }
-}
-#download-effect-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.drop {
-    width: 40px;
-    height: 40px;
-    background: #0f0;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: #fff;
-}
-.circle {
-    width: 80px;
-    height: 80px;
-    background: #0f0;
-    border-radius: 50%;
-    box-shadow: 0 0 20px #0f0, 0 0 40px #0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 36px;
-    color: #fff;
-}
-
