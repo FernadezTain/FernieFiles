@@ -67,7 +67,7 @@ downloadBtn.addEventListener('click', e => {
 });
 
 function showDownloadCompleteEffect(callback) {
-    // создаем overlay
+    // Создаем overlay поверх всего
     const overlay = document.createElement('div');
     overlay.className = 'download-overlay';
     overlay.innerHTML = `
@@ -81,12 +81,12 @@ function showDownloadCompleteEffect(callback) {
     `;
     document.body.appendChild(overlay);
 
-    // запускаем анимацию
+    // Запуск анимации
     setTimeout(() => overlay.classList.add('animate'), 50);
 
-    // скачивание через 2 секунды
+    // Скачивание через 2 секунды
     setTimeout(() => callback(), 2000);
 
-    // удаление overlay через 3 секунды
+    // Удаление overlay через 3 секунды
     setTimeout(() => overlay.remove(), 3000);
 }
