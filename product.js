@@ -7,15 +7,20 @@ const productDesc = document.getElementById('product-desc');
 const productAuthor = document.getElementById('product-author');
 const productSize = document.getElementById('product-size');
 const downloadBtn = document.getElementById('download-btn');
+const downloadGDriveBtn = document.getElementById('download-gdrive-btn');
 
 let currentIndex = 0;
 let images = [];
 
+// ===== Загрузка данных продукта =====
 fetch('./data.json')
   .then(r => r.json())
   .then(data => {
       const product = data.products.find(p => p.id === id);
-      if (!product) return;
+      if (!product) {
+          showError("Продукт не найден.");
+          return;
+      }
 
       localStorage.setItem('viewed_' + id, 'true');
 
@@ -26,10 +31,22 @@ fetch('./data.json')
       productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
       downloadBtn.href = product.download;
 
+      // Настройка кнопки Google Drive
+      if (product.download_GDrive) {
+          downloadGDriveBtn.href = product.download_GDrive;
+          downloadGDriveBtn.style.display = 'inline-block';
+      } else {
+          downloadGDriveBtn.style.display = 'none';
+      }
+
       updatePhoto();
   })
-  .catch(err => console.error('Ошибка загрузки JSON:', err));
+  .catch(err => {
+      console.error('Ошибка загрузки JSON:', err);
+      showError("Не удалось загрузить данные. Проверьте соединение с интернетом.");
+  });
 
+// ===== Обновление фото =====
 function updatePhoto() {
   if (!images.length) return;
   mainPhoto.style.opacity = 0;
@@ -39,6 +56,7 @@ function updatePhoto() {
   }, 150);
 }
 
+// ===== Кнопки переключения фото =====
 prevBtn.addEventListener('click', () => {
   if (!images.length) return;
   currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -51,27 +69,57 @@ nextBtn.addEventListener('click', () => {
   updatePhoto();
 });
 
-// ===== DOWNLOAD BUTTON EFFECT =====
-downloadBtn.addEventListener('click', e => {
-    e.preventDefault();
-    const url = downloadBtn.href;
+// ===== Функция отображения ошибки =====
+function showError(message) {
+    const content = document.getElementById('content');
+    content.innerHTML = `
+        <div style="text-align:center; padding:50px;">
+            <h2>Ошибка</h2>
+            <p>${message}</p>
+            <button onclick="window.location.reload()" style="
+                padding:10px 20px;
+                border:none;
+                border-radius:6px;
+                background:#00eaff;
+                color:white;
+                cursor:pointer;
+            ">Попробовать снова</button>
+        </div>
+    `;
+}
 
-    // перекрашиваем кнопку в зелёный
-    downloadBtn.style.transition = 'background 0.5s';
-    downloadBtn.style.background = '#0f0';
+// ===== Эффект скачивания для кнопок =====
+function setupDownloadButton(btn, isGDrive = false) {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        const url = btn.href;
 
-    // начинаем скачивание через 0.5 сек
-    setTimeout(() => {
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = '';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        // перекрашиваем кнопку в зелёный
+        btn.style.transition = 'background 0.5s';
+        btn.style.background = '#0f0';
 
-        // через 1 сек возвращаем исходный цвет
         setTimeout(() => {
-            downloadBtn.style.background = ''; // вернётся к CSS
-        }, 1000);
-    }, 500);
-});
+            if (isGDrive) {
+                // Открываем Google Drive в новой вкладке
+                window.open(url, '_blank');
+            } else {
+                // Скачиваем файл
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = '';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+
+            // через 1 сек возвращаем исходный цвет
+            setTimeout(() => {
+                btn.style.background = ''; // вернётся к CSS
+            }, 1000);
+        }, 500);
+    });
+}
+
+// ===== Применяем эффект к обеим кнопкам =====
+setupDownloadButton(downloadBtn);
+setupDownloadButton(downloadGDriveBtn, true);
