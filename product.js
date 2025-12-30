@@ -52,45 +52,54 @@ nextBtn.addEventListener('click', () => {
 
 // ===== DOWNLOAD EFFECT =====
 downloadBtn.addEventListener('click', e => {
-    e.preventDefault(); // отменяем стандартное поведение ссылки
+    e.preventDefault(); // отменяем стандартное скачивание
     const url = downloadBtn.href;
 
     showDownloadCompleteEffect(() => {
-        // Создаем динамический элемент <a> для скачивания
+        // Начинаем скачивание после анимации
         const a = document.createElement('a');
         a.href = url;
-        a.download = ''; // указываем что это скачивание
+        a.download = '';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
     });
 });
 
-
 function showDownloadCompleteEffect(callback) {
-    const container = document.createElement('div');
-    container.className = 'download-complete';
+    const container = document.getElementById('download-effect-container');
 
+    // Создаем каплю
     const drop = document.createElement('div');
     drop.className = 'drop';
-
-    const circle = document.createElement('div');
-    circle.className = 'circle';
-
-    const check = document.createElement('div');
-    check.className = 'checkmark';
-
     container.appendChild(drop);
-    container.appendChild(circle);
-    container.appendChild(check);
-    document.body.appendChild(container);
 
-    setTimeout(() => {
-        container.classList.add('fade-out');
-    }, 2600);
+    // Анимация капли
+    drop.animate([
+        { transform: 'translateY(-200px) scale(0.2)', opacity: 0 },
+        { transform: 'translateY(0) scale(1)', opacity: 1 }
+    ], {
+        duration: 600,
+        easing: 'ease-out'
+    });
 
+    // Через 600ms превращаем каплю в круг с галочкой
     setTimeout(() => {
-        document.body.removeChild(container);
-        if (callback) callback();
-    }, 3200);
+        drop.className = 'circle';
+        drop.innerHTML = '&#10003;'; // галочка
+        drop.style.opacity = 0;
+
+        drop.animate([
+            { opacity: 0, transform: 'scale(0.8)' },
+            { opacity: 1, transform: 'scale(1.2)' },
+            { opacity: 1, transform: 'scale(1)' },
+            { opacity: 0 }
+        ], {
+            duration: 800,
+            easing: 'ease-in-out'
+        }).onfinish = () => {
+            container.removeChild(drop);
+            callback(); // запускаем скачивание после анимации
+        };
+    }, 600);
 }
