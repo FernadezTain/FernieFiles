@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>FernieX - Files</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>FernieX - Files</h1>
+
+<div class="container">
+    <div class="products" id="products"></div>
+</div>
+
+<script>
+fetch('data.json')
+.then(r => r.json())
+.then(data => {
+    const list = document.getElementById('products');
+
+    data.products.forEach(p => {
+        const viewed = localStorage.getItem('viewed_' + p.id);
+        const label = viewed ? '👁 viewed' : '🆕 new';
+
+        list.innerHTML += `
+            <a href="product.html?id=${p.id}" class="product">
+                <div class="badge">${label}</div>
+                <img src="${p.images[0]}">
+                <h3>${p.name}</h3>
+            </a>
+        `;
+    });
+});
+</script>
+
+</body>
+</html>
