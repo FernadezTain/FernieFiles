@@ -11,41 +11,79 @@ const downloadBtn = document.getElementById('download-btn');
 let currentIndex = 0;
 let images = [];
 
-fetch('data.json')
-    .then(r => r.json())
-    .then(data => {
-        const product = data.products.find(p => p.id === id);
-        if (!product) return;
+fetch('./data.json')
+  .then(r => r.json())
+  .then(data => {
+      const product = data.products.find(p => p.id === id);
+      if (!product) return;
 
-        localStorage.setItem('viewed_' + id, 'true');
+      localStorage.setItem('viewed_' + id, 'true');
 
-        images = product.images;
-        productName.textContent = product.name;
-        productDesc.innerHTML = `<strong>Описание:</strong> ${product.description}`;
-        productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author}`;
-        productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
-        downloadBtn.href = product.download;
+      images = product.images;
+      productName.textContent = product.name;
+      productDesc.innerHTML = `<strong>Описание:</strong> ${product.description}`;
+      productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author}`;
+      productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
+      downloadBtn.href = product.download;
 
-        updatePhoto();
-    });
+      updatePhoto();
+  })
+  .catch(err => console.error('Ошибка загрузки JSON:', err));
 
 function updatePhoto() {
-    if (!images.length) return;
-    mainPhoto.style.opacity = 0;
-    setTimeout(() => {
-        mainPhoto.src = images[currentIndex];
-        mainPhoto.style.opacity = 1;
-    }, 150);
+  if (!images.length) return;
+  mainPhoto.style.opacity = 0;
+  setTimeout(() => {
+      mainPhoto.src = images[currentIndex];
+      mainPhoto.style.opacity = 1;
+  }, 150);
 }
 
 prevBtn.addEventListener('click', () => {
-    if (!images.length) return;
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    updatePhoto();
+  if (!images.length) return;
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updatePhoto();
 });
 
 nextBtn.addEventListener('click', () => {
-    if (!images.length) return;
-    currentIndex = (currentIndex + 1) % images.length;
-    updatePhoto();
+  if (!images.length) return;
+  currentIndex = (currentIndex + 1) % images.length;
+  updatePhoto();
 });
+
+// ===== DOWNLOAD EFFECT =====
+downloadBtn.addEventListener('click', e => {
+  e.preventDefault(); 
+  const url = downloadBtn.href;
+
+  showDownloadCompleteEffect(() => {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  });
+});
+
+function showDownloadCompleteEffect(callback) {
+  const overlay = document.createElement('div');
+  overlay.className = 'download-overlay';
+  overlay.innerHTML = `
+      <div class="drop"></div>
+      <div class="circle">
+          <svg viewBox="0 0 52 52" class="checkmark">
+              <circle cx="26" cy="26" r="25" fill="none"/>
+              <path d="M14 27l7 7 16-16" fill="none"/>
+          </svg>
+      </div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.classList.add('animate'), 50);
+
+  setTimeout(() => {
+      callback();
+  }, 2500);
+
+  setTimeout(() => overlay.remove(), 4000);
+}
