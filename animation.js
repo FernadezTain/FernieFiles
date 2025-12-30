@@ -277,3 +277,8 @@ modalStyles.textContent = `
     }
 `;
 document.head.appendChild(modalStyles);
+
+document.querySelectorAll('.product img, .gallery img').forEach(img => {
+    img.addEventListener('contextmenu', e => e.preventDefault());
+});
+
