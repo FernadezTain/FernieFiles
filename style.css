@@ -194,3 +194,36 @@ h1 {
     pointer-events: auto;    /* оставляем события hover */
 }
 
+/* ===== Раскрывающийся блок ===== */
+.product-expand {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    padding: 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.product.active .product-expand {
+    max-height: 60px; /* регулируешь высоту */
+    padding: 10px 0;
+}
+
+/* ===== Кнопка Подробнее ===== */
+.btn-more {
+    background: linear-gradient(45deg, #00eaff, #ff0080);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn-more:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #ff0080, #00eaff);
+}
