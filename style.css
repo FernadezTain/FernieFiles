@@ -193,3 +193,31 @@ h1 {
     z-index: -1; /* позади всего */
     pointer-events: none; /* клики проходят сквозь */
 }
+
+/* ===== BACK BUTTON (Glass Morphism) ===== */
+.btn-back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.btn-back:hover {
+    background: rgba(128, 0, 255, 0.2);
+    border-color: rgba(128, 0, 255, 0.5);
+    box-shadow: 0 8px 20px rgba(128, 0, 255, 0.4);
+}
+
+.btn-back:active {
+    transform: scale(0.95);
+}
