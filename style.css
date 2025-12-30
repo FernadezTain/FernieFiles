@@ -207,23 +207,34 @@ h1 {
 }
 
 .product.active .product-expand {
-    max-height: 60px; /* регулируешь высоту */
+    max-height: 80px; /* увеличиваем, чтобы кнопка помещалась */
     padding: 10px 0;
 }
 
-/* ===== Кнопка Подробнее ===== */
+/* ===== Liquid Glass кнопка ===== */
 .btn-more {
-    background: linear-gradient(45deg, #00eaff, #ff0080);
+    width: 90%; /* почти вся ширина карточки */
+    height: 50px; /* регулируем высоту */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(0, 234, 255, 0.1); /* лёгкий голубой оттенок */
+    border: 1px solid rgba(0, 234, 255, 0.3);
+    border-radius: 14px;
     color: #fff;
-    border: none;
-    border-radius: 12px;
-    padding: 8px 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s ease, background 0.3s ease;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
 }
 
+/* Hover эффект — фиолетовый градиент */
 .btn-more:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #ff0080, #00eaff);
+    background: linear-gradient(135deg, #9d50bb, #6e48aa);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transform: scale(1.02);
 }
+
