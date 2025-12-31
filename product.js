@@ -46,6 +46,14 @@ fetch('./data.json')
             downloadGDriveBtn.style.display = 'none';
         }
 
+        // ======= YouTube кнопка =======
+        if (product.youtube) {
+            youtubeBtn.href = product.youtube;
+            youtubeBtn.style.display = 'inline-block';
+        } else {
+            youtubeBtn.style.display = 'none';
+        }
+
         updatePhoto();
     })
     .catch(err => {
