@@ -4,3 +4,14 @@
     transition: background 0.5s ease;
     cursor: pointer;
 }
+
+#youtube-btn {
+    background: #ff0000; /* красная */
+    color: white;
+    transition: background 0.3s ease, opacity 0.2s ease;
+    cursor: pointer;
+}
+
+#youtube-btn:hover {
+    background: #cc0000;
+}
