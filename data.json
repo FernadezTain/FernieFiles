@@ -3,8 +3,8 @@
     {
       "id": "redux",
       "name": "Redux | GTA V | Majestic RP",
-      "description": "Набор Redux компонентов и конфигураций. FPS Boost",
-      "author": "FernieX",
+      "description": "Набор Redux компонентов и конфигураций.",
+      "author": "No info",
       "size": "2.64 GB",
       "download": "https://www.dropbox.com/scl/fi/yeic4u1e2u1h141iw96lq/update.rpf?dl=1",
       "download_GDrive": "https://drive.google.com/file/d/1n5D3FHy00w44LJFt_QvgLKGXOfU0H3uG/view",
@@ -12,6 +12,19 @@
       "images": [
         "images/redux1.png",
         "images/redux2.png"
+      ]
+    },
+        {
+      "id": "redux_free_1",
+      "name": "Redux FREE | GTA V | Majestic RP",
+      "description": "Набор Redux компонентов и конфигураций.",
+      "author": "No info",
+      "size": "741 GB",
+      "download_GDrive": "https://drive.usercontent.google.com/download?id=1sXQeBAf4PlEtbSWBAR67pwq8D828CnT1&export=download&authuser=0",
+      "youtube": "https://www.youtube.com/watch?v=pcN8gTu2zvQ",
+      "images": [
+        "images/redux_free_1_1.png",
+        "images/redux_free_1_2.png"
       ]
     }
   ]
