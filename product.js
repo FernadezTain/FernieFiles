@@ -11,6 +11,7 @@ const productSize = document.getElementById('product-size');
 
 const downloadBtn = document.getElementById('download-btn');
 const downloadGDriveBtn = document.getElementById('download-gdrive-btn');
+const youtubeBtn = document.getElementById('youtube-btn');
 
 let currentIndex = 0;
 let images = [];
@@ -122,6 +123,19 @@ function setupDownloadButton(btn, isGDrive = false) {
         }, 300);
     });
 }
+youtubeBtn.addEventListener('click', e => {
+    e.preventDefault();
+    const url = youtubeBtn.href;
+    if (!url) return;
+
+    youtubeBtn.style.opacity = '0.7';
+
+    setTimeout(() => {
+        window.open(url, '_blank');
+        youtubeBtn.style.opacity = '1';
+    }, 150);
+});
+
 
 // ================== Применяем ==================
 setupDownloadButton(downloadBtn);
