@@ -1,75 +1,82 @@
 const id = new URLSearchParams(window.location.search).get('id');
+
 const mainPhoto = document.getElementById('main-photo');
 const prevBtn = document.querySelector('.prev-photo');
 const nextBtn = document.querySelector('.next-photo');
+
 const productName = document.getElementById('product-name');
 const productDesc = document.getElementById('product-desc');
 const productAuthor = document.getElementById('product-author');
 const productSize = document.getElementById('product-size');
+
 const downloadBtn = document.getElementById('download-btn');
 const downloadGDriveBtn = document.getElementById('download-gdrive-btn');
 
 let currentIndex = 0;
 let images = [];
 
-// ===== Загрузка данных продукта =====
+// ================== Загрузка данных продукта ==================
 fetch('./data.json')
-  .then(r => r.json())
-  .then(data => {
-      const product = data.products.find(p => p.id === id);
-      if (!product) {
-          showError("Продукт не найден.");
-          return;
-      }
+    .then(r => r.json())
+    .then(data => {
+        const product = data.products.find(p => p.id === id);
 
-      localStorage.setItem('viewed_' + id, 'true');
+        if (!product) {
+            showError('Продукт не найден.');
+            return;
+        }
 
-      images = product.images;
-      productName.textContent = product.name;
-      productDesc.innerHTML = `<strong>Описание:</strong> ${product.description}`;
-      productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author}`;
-      productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
-      downloadBtn.href = product.download;
+        localStorage.setItem('viewed_' + id, 'true');
 
-      // Настройка кнопки Google Drive
-      if (product.download_GDrive) {
-          downloadGDriveBtn.href = product.download_GDrive;
-          downloadGDriveBtn.style.display = 'inline-block';
-      } else {
-          downloadGDriveBtn.style.display = 'none';
-      }
+        images = product.images || [];
 
-      updatePhoto();
-  })
-  .catch(err => {
-      console.error('Ошибка загрузки JSON:', err);
-      showError("Не удалось загрузить данные. Проверьте соединение с интернетом.");
-  });
+        productName.textContent = product.name;
+        productDesc.innerHTML = `<strong>Описание:</strong> ${product.description}`;
+        productAuthor.innerHTML = `<strong>Автор:</strong> ${product.author}`;
+        productSize.innerHTML = `<strong>Вес файла:</strong> ${product.size}`;
 
-// ===== Обновление фото =====
+        // ссылки на скачивание
+        downloadBtn.href = product.download;
+
+        if (product.download_GDrive) {
+            downloadGDriveBtn.href = product.download_GDrive;
+            downloadGDriveBtn.style.display = 'inline-block';
+        } else {
+            downloadGDriveBtn.style.display = 'none';
+        }
+
+        updatePhoto();
+    })
+    .catch(err => {
+        console.error(err);
+        showError('Не удалось загрузить данные.');
+    });
+
+// ================== Обновление фото ==================
 function updatePhoto() {
-  if (!images.length) return;
-  mainPhoto.style.opacity = 0;
-  setTimeout(() => {
-      mainPhoto.src = images[currentIndex];
-      mainPhoto.style.opacity = 1;
-  }, 150);
+    if (!images.length) return;
+
+    mainPhoto.style.opacity = 0;
+    setTimeout(() => {
+        mainPhoto.src = images[currentIndex];
+        mainPhoto.style.opacity = 1;
+    }, 150);
 }
 
-// ===== Кнопки переключения фото =====
+// ================== Переключение фото ==================
 prevBtn.addEventListener('click', () => {
-  if (!images.length) return;
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  updatePhoto();
+    if (!images.length) return;
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    updatePhoto();
 });
 
 nextBtn.addEventListener('click', () => {
-  if (!images.length) return;
-  currentIndex = (currentIndex + 1) % images.length;
-  updatePhoto();
+    if (!images.length) return;
+    currentIndex = (currentIndex + 1) % images.length;
+    updatePhoto();
 });
 
-// ===== Функция отображения ошибки =====
+// ================== Ошибка ==================
 function showError(message) {
     const content = document.getElementById('content');
     content.innerHTML = `
@@ -88,38 +95,34 @@ function showError(message) {
     `;
 }
 
-// ===== Эффект скачивания для кнопок =====
+// ================== Кнопки скачивания ==================
 function setupDownloadButton(btn, isGDrive = false) {
     btn.addEventListener('click', e => {
         e.preventDefault();
         const url = btn.href;
+        if (!url) return;
 
-        // перекрашиваем кнопку в зелёный
-        btn.style.transition = 'background 0.5s';
+        // эффект нажатия
+        btn.style.transition = 'background 0.3s';
         btn.style.background = '#0f0';
 
         setTimeout(() => {
             if (isGDrive) {
-                // Открываем Google Drive в новой вкладке
+                // Google Drive — новая вкладка
                 window.open(url, '_blank');
             } else {
-                // Скачиваем файл
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = '';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                // Dropbox / прямые ссылки — обычный переход
+                window.location.href = url;
             }
 
-            // через 1 сек возвращаем исходный цвет
+            // вернуть цвет
             setTimeout(() => {
-                btn.style.background = ''; // вернётся к CSS
-            }, 1000);
-        }, 500);
+                btn.style.background = '';
+            }, 800);
+        }, 300);
     });
 }
 
-// ===== Применяем эффект к обеим кнопкам =====
+// ================== Применяем ==================
 setupDownloadButton(downloadBtn);
 setupDownloadButton(downloadGDriveBtn, true);
