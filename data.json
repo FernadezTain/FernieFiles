@@ -40,6 +40,21 @@
         "images/Redux_New_YearAlexBoom_2.png",
         "images/Redux_New_YearAlexBoom_3.png"
       ]
+    },
+        {
+      "id": "redux_disslovedv1_1",
+      "name": "dissloved v1 | GTA V | Majestic RP",
+      "description": "Набор Redux компонентов и конфигураций.",
+      "author": "CptArm",
+      "size": "1 GB",
+      "download_GDrive": "https://drive.google.com/file/d/1x2rgUXeCzK8Gtvp8Qmb1UJJcf0SuUg_U/view",
+      "youtube": "https://www.youtube.com/watch?v=88JixTDw6I4",
+      "images": [
+        "images/redux_disslovedv1_1.png",
+        "images/redux_disslovedv1_2.png",
+        "images/redux_disslovedv1_3.png",
+        "images/redux_disslovedv1_4.png",
+      ]
     }
   ]
 }
