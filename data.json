@@ -59,7 +59,7 @@
         {
       "id": "LegacyLauncherMinecraft",
       "name": "Minecraft | Legacy Launcher",
-      "description": "Набор Redux компонентов и конфигураций.",
+      "description": "Minecraft Лаунчер",
       "author": "turikhay (Артур Хусаинов)",
       "size": "2.8 GB",
       "download": "https://dl.legacylauncher.ru/legacy/installer",
